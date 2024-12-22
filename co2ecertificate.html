@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate of CO2 Emission</title>
+    <style>
+        @font-face {
+            font-family: 'Magnolia Script';
+            src: url('MagnoliaScript.ttf') format('truetype');
+        }
+
+        body {
+            font-family: 'Playfair Display', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+            margin: 0;
+        }
+
+        .certificate {
+            border: 10px solid #D4AF37;
+            padding: 30px;
+            width: 700px;
+            text-align: center;
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            background: url('https://www.toptal.com/designers/subtlepatterns/patterns/symphony.png');
+        }
+
+        .certificate h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            font-style: italic;
+            font-family: 'Magnolia Script', cursive;
+            color: #D4AF37;
+        }
+
+        .certificate p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .certificate .highlight {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .top-section {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .top-section p {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .logos {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .logos-left,
+        .logos-right {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logos-left a img {
+            height: 20px;
+            margin-bottom: 5px;
+        }
+
+        .logos-right img {
+            height: 60px;
+            width: 60px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        .info-section p {
+            text-align: left;
+            margin: 5px 0;
+            font-size: 7px;
+        }
+
+        .signature-section {
+            margin-top: 40px;
+            text-align: right;
+        }
+
+        .signature-line {
+            margin-top: 20px;
+            border-top: 1px solid #000;
+            width: 250px;
+            margin-left: auto;
+            margin-right: 0;
+        }
+
+        .issuer-section {
+            margin-top: 40px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="certificate">
+        <div class="logos">
+            <div class="logos-left">
+                <a target="blank" href="https://dpiit.gov.in" class="logo nonsticky" data-page="home-page">
+                    <img src="https://github.com/nitish1899/Image/blob/main/DPIIT-1719464112334.png?raw=true"
+                        alt="DPIIT Logo">
+                </a>
+                <a href="https://www.startupindia.gov.in" class="logo nonsticky" data-page="home-page">
+                    <img src="https://github.com/nitish1899/Image/blob/main/Logo1.png?raw=true"
+                        alt="Startup India Logo">
+                </a>
+            </div>
+            <div class="logos-right">
+                <img src="	https://github.com/nitish1899/Image/blob/main/logo3-removebg-preview.png?raw=true
+                " alt="TSIL Logo">
+            </div>
+        </div>
+        <div class="top-section">
+            <p>Certificate Number: <span class="highlight" id="certificateNumber">${result && result.certificateNumber}</span></p>
+            <p>Date: <span class="highlight" id="date">${result && result.certificateIssueDate}</span></p>
+        </div>
+        <h1>Certificate of CO2 Emission</h1>
+        <p>This is to certify that the vehicle owned by</p>
+        <p class="highlight" id="vehicleOwner">${result && result.vehicleOwner}</p>
+        <p>with vehicle number</p>
+        <p class="highlight" id="vehicleNumber">${result && result.vehicleNumber}</p>
+        <p>has emitted</p>
+        <p><span class="highlight" id="co2Emission">${result && result.co2Emission}</span> unit CO2</p>
+
+        <div class="signature-section">
+            <p>Authorized Signature</p>
+            <div class="signature-line" id="signature">Jane Smith</div>
+        </div>
+
+        <div class="issuer-section">
+            <p>Issued by:</p>
+            <p class="highlight">Transvue Solution India Pvt. Ltd.</p>
+        </div>
+
+        <div class="info-section">
+            <p>* The above result is based on user input.</p>
+            <p>* Additional details are based on US/UK research.</p>
+        </div>
+    </div>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate of CO2 Emission</title>
+    <style>
+        @font-face {
+            font-family: 'Magnolia Script';
+            src: url('MagnoliaScript.ttf') format('truetype');
+        }
+
+        body {
+            font-family: 'Playfair Display', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+            margin: 0;
+        }
+
+        .certificate {
+            border: 10px solid #D4AF37;
+            padding: 30px;
+            width: 700px;
+            text-align: center;
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            background: url('https://www.toptal.com/designers/subtlepatterns/patterns/symphony.png');
+        }
+
+        .certificate h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            font-style: italic;
+            font-family: 'Magnolia Script', cursive;
+            color: #D4AF37;
+        }
+
+        .certificate p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .certificate .highlight {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .top-section {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .top-section p {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .logos {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .logos-left,
+        .logos-right {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logos-left a img {
+            height: 20px;
+            margin-bottom: 5px;
+        }
+
+        .logos-right img {
+            height: 60px;
+            width: 60px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        .info-section p {
+            text-align: left;
+            margin: 5px 0;
+            font-size: 7px;
+        }
+
+        .signature-section {
+            margin-top: 40px;
+            text-align: right;
+        }
+
+        .signature-line {
+            margin-top: 20px;
+            border-top: 1px solid #000;
+            width: 250px;
+            margin-left: auto;
+            margin-right: 0;
+        }
+
+        .issuer-section {
+            margin-top: 40px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="certificate">
+        <div class="logos">
+            <div class="logos-left">
+                <a target="blank" href="https://dpiit.gov.in" class="logo nonsticky" data-page="home-page">
+                    <img src="https://github.com/nitish1899/Image/blob/main/DPIIT-1719464112334.png?raw=true"
+                        alt="DPIIT Logo">
+                </a>
+                <a href="https://www.startupindia.gov.in" class="logo nonsticky" data-page="home-page">
+                    <img src="https://github.com/nitish1899/Image/blob/main/Logo1.png?raw=true"
+                        alt="Startup India Logo">
+                </a>
+            </div>
+            <div class="logos-right">
+                <img src="	https://github.com/nitish1899/Image/blob/main/logo3-removebg-preview.png?raw=true
+                " alt="TSIL Logo">
+            </div>
+        </div>
+        <div class="top-section">
+            <p>Certificate Number: <span class="highlight" id="certificateNumber">CERT-2024-001</span></p>
+            <p>Date: <span class="highlight" id="date">June 18, 2024</span></p>
+        </div>
+        <h1>Certificate of CO2 Emission</h1>
+        <p>This is to certify that the vehicle owned by</p>
+        <p class="highlight" id="vehicleOwner">John Doe</p>
+        <p>with vehicle number</p>
+        <p class="highlight" id="vehicleNumber">ABC1234</p>
+        <p>has emitted</p>
+        <p><span class="highlight" id="co2Emission">120.5</span> unit CO2</p>
+
+        <div class="signature-section">
+            <p>Authorized Signature</p>
+            <div class="signature-line" id="signature">Jane Smith</div>
+        </div>
+
+        <div class="issuer-section">
+            <p>Issued by:</p>
+            <p class="highlight">Transvue Solution India Pvt. Ltd.</p>
+        </div>
+
+        <div class="info-section">
+            <p>* The above result is based on user input.</p>
+            <p>* Additional details are based on US/UK research.</p>
+        </div>
+    </div>
+</body>
+
+</html> -->

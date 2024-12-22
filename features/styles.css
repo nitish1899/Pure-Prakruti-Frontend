@@ -1,0 +1,6 @@
+/* In your styles.css or a similar file */
+.vertical-text {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+  
