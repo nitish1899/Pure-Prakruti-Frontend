@@ -24,7 +24,7 @@ const signUpSchema = yup.object().shape({
     .string()
     .min(4, 'Length should be 4')
     .max(4, 'Length should be 4')
-    // .matches(phoneRegex, 'Enter a valid pin number')
+  // .matches(phoneRegex, 'Enter a valid pin number')
 
   // email: yup
   //   .string()
@@ -347,16 +347,22 @@ const App = () => {
             <Image
               className=" ml-2"
               source={require("../../assets/images/image 10.png")}
-              style={{ width: 40, height: 22 }}
+              style={{ width: 40, height: 28 }}
             />
           </View>
-          <View className="w-[37%]">
+          <View style={{ width: "37%" }}>
             <Image
-              className=" ml-11 w-[70%] h-[90%]"
-              source={require("../../assets/images/lion3.png")}
-            // style={{ width: 100, height: 58 }}
+              source={require("../../assets/images/make-in-India-logo.jpg")}
+              style={{
+                width: "100%",
+                height: undefined,
+                aspectRatio: 100 / 28, // Use the actual aspect ratio of the image
+                resizeMode: "contain",
+                marginLeft: 24,
+              }}
             />
           </View>
+
         </View>
       </ImageBackground>
     </View>

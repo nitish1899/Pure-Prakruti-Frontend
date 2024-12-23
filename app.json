@@ -27,7 +27,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.nitishco2e.twico2ecalculator",
-      "versionCode": 8
+      "versionCode": 11
     },
     "web": {
       "favicon": "./assets/favicon.png"
