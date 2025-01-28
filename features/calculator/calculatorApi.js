@@ -12,12 +12,12 @@ export function calculateResult(info) {
     
     if (response.ok) {
       const data = await response.json();
-      // console.log(data);
+      console.log('data: ',data);
       resolve({ data });
       
     } else {
       const error = await response.json();
-      console.log(error);
+      console.log('error: ',error);
       reject(error);
     }
     }catch (error) {
