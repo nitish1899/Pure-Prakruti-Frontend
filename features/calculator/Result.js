@@ -27,7 +27,7 @@ const App = () => {
   const [selectedFuel, setSelectedFuel] = useState("");
 
   // CO2 Emission Data (kg)
-  const fuelEmissions: { [key: string]: number } = {
+  const fuelEmissions = {
     petrol: 200,
     diesel: 180,
     ethanol: 100,
