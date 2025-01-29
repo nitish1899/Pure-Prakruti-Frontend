@@ -25,7 +25,7 @@ export default () => {
     const timer1 = setTimeout(() => {
       setSplash1Visible(false);
       setSplash2Visible(true);
-    }, 2000); // Set duration for Splash1 (in milliseconds)
+    }, 2000); 
 
     const timer2 = setTimeout(() => {
       setSplash2Visible(false);
@@ -58,14 +58,12 @@ export default () => {
       </>
      ) : (
       <>
-      <Stack.Screen name="Login" component={Login} />
+   <Stack.Screen name="Login" component={Login} />
    <Stack.Screen name="Splash1" component={Splash1} />
    <Stack.Screen name="Splash2" component={Splash2} />
    <Stack.Screen name="Signup" component={Signup} />
    </>
      )}
-   
-   
 </Stack.Navigator>
    )}  
  </>
