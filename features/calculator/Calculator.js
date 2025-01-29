@@ -11,14 +11,14 @@ import { calculateResultAsync, selectUserInfo } from './calculatorSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { Keyboard, Platform } from 'react-native';
 
-
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 
 const App = () => {
   const [isChecked, setIsChecked] = useState(false);
   const [vehiclePart1, setVehiclePart1] = useState('');
   const [vehiclePart2, setVehiclePart2] = useState('');
   const [vehiclePart3, setVehiclePart3] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
   const [showAdditionalDetails, setShowAdditionalDetails] = useState(false); // State to toggle additional details
   const userInfo = useSelector(selectUserInfo);
 
@@ -31,6 +31,7 @@ const App = () => {
   const box3Ref = useRef(null);
 
   const [showImage, setShowImage] = useState(false);
+  const [isLoading,setIsLoading] = useState(false);
     const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
     useEffect(() => {
       const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
@@ -148,28 +149,25 @@ const App = () => {
             <Formik initialValues={{
               VechileNumber: '', SourcePincode: '', DestinationPincode: '', LoadedWeight: '', VechileType: '', MobilisationDistance: '', DeMobilisationDistance: '', gstin: ''
             }}
-              onSubmit={
-                async (values) => {
-                  setIsLoading(true); // Start loading
-
-                  values.VechileNumber = box2 + box3;
-
-                  if (true) {
-                    console.log(values);
-                    dispatch(calculateResultAsync(values));
-                    // navigation.navigate('Result');
-
-                  } else {
-                    // Do nothing, stay on the same page
-                    setIsLoading(false);
-                  }
-                  // navigation.navigate('MarketplaceAfterRebid') 
-
-                  // setFormValues(values);
-                }
-              }
+            onSubmit={async (values, { resetForm }) => {
+              setIsLoading(true); // Start loading
+              values.VechileNumber = box2 + box3;
+              console.log(values);
+              dispatch(calculateResultAsync(values));
+              // navigation.navigate('Result');
+              setIsLoading(false);
+            }}
             >
-              {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
+              {({ handleChange, handleBlur, handleSubmit, values, errors, resetForm }) => {
+                    useFocusEffect(
+                      useCallback(() => {
+                        resetForm();
+                        setBox2('');
+                       setBox3(''); // Reset form when screen is focused (on back navigation)
+                      }, [])
+                    );
+                    return (
+
                 <View style={styles.formWrapper}>
 
                   <Text style={styles.subtitle}>Trip Details</Text>
@@ -288,7 +286,8 @@ const App = () => {
                     </View>
                   </TouchableOpacity>
                 </View>
-              )}
+                );
+              }}
             </Formik>
 
           </ScrollView>
