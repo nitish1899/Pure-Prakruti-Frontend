@@ -15,7 +15,10 @@ import * as Print from 'expo-print';
 import { shareAsync } from 'expo-sharing';
 import LottieView from 'lottie-react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { Dropdown } from 'react-native-element-dropdown';
+import { Keyboard } from 'react-native';
 const { width } = Dimensions.get('window');
+
 
 const App = () => {
   const userBoy = "rocky";
@@ -25,6 +28,30 @@ const App = () => {
   const userInfo = useSelector(selectUserInfo);
   const navigation = useNavigation();
   const [selectedFuel, setSelectedFuel] = useState("");
+
+    const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+
+    const [isFocus, setIsFocus] = useState(false);
+
+  const fuelTypes = [
+    { label: 'Petrol', value: 'petrol' },
+    { label: 'Diesel', value: 'diesel' },
+    { label: 'Ethanol', value: 'ethanol' },
+    { label: 'Electric', value: 'electric' },
+  ];
+    useEffect(() => {
+      const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
+        setIsKeyboardVisible(true);
+      });
+      const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+        setIsKeyboardVisible(false);
+      });
+    
+      return () => {
+        showSubscription.remove();
+        hideSubscription.remove();
+      };
+    }, []);
 
   // CO2 Emission Data (kg)
   const fuelEmissions = {
@@ -274,18 +301,23 @@ const App = () => {
 
 
   return (
-    <View className=" h-[100%] ">
-      <ImageBackground source={require("../../assets/images/Pure Prakriti bg img.jpg")} resizeMode="cover" className="h-[100%] flex items-center">
+    <View style={styles.mainContainer}>
+          <ImageBackground
+             source={require('../../assets/images/Pure Prakriti bg img.jpg')}
+             resizeMode="cover"
+             style={styles.imageBackground}
+           >
       
-        <View className="w-[100%] h-[15%] bg-green-700 ">
-          <Text className="mt-[90px] text-2xl text-white text-center">नमस्ते  {userInfo ? userInfo.userName : "Name"}</Text>
+         <View style={styles.overlay} />
+        <View style={styles.headerContainer}>
+          <Text style={styles.headerText}>Your Stats</Text>
         </View>
         
         
-        <KeyboardAvoidingView className=" h-[70%] w-[100%]  ">
+        <KeyboardAvoidingView behavior="padding" style={styles.formContainer}>
           <ScrollView showsVerticalScrollIndicator={false}>
 
-              <View className=" items-center justify-center  mt-20">
+              <View style={styles.formWrapper}>
 
               <Animated.View style={[styles.animatedView, { transform: [{ translateX }] }]}>
                 <View style={styles.container}>
@@ -315,7 +347,7 @@ const App = () => {
                ]}
                className="absolute w-[100%] shadow-lg  flex items-center justify-center"
              >
-                    <View style={styles.card}>
+          <View style={styles.card}>
         <Text style={styles.title}>Total Carbon Footprint</Text>
         <View style={styles.valueContainer}>
           <Text style={styles.value}>{result && result.co2Emission} kg</Text>
@@ -354,16 +386,28 @@ const App = () => {
           Compare your CO2 emissions:
         </Text>
         <View className="border rounded-lg bg-white shadow-md">
-          <Picker
-            selectedValue={selectedFuel}
-            onValueChange={(itemValue) => setSelectedFuel(itemValue)}
-          >
-            <Picker.Item label="Select Fuel type" value="" />
-            <Picker.Item label="Petrol" value="petrol" />
-            <Picker.Item label="Diesel" value="diesel" />
-            <Picker.Item label="Ethanol" value="ethanol" />
-            <Picker.Item label="Electric" value="electric" />
-          </Picker>
+   
+
+          <Dropdown
+        style={[styles.dropdown, isFocus && { borderColor: '#007BFF' }]}
+        data={fuelTypes}
+        labelField="label"
+        valueField="value"
+        placeholder="Select Fuel type"
+        value={selectedFuel}
+        onFocus={() => setIsFocus(true)}
+        onBlur={() => setIsFocus(false)}
+        onChange={(item) => setSelectedFuel(item.value)}
+        renderItem={(item, index) => (
+          <View>
+            <View style={styles.itemContainer}>
+              <Text style={styles.itemText}>{item.label}</Text>
+            </View>
+            {index < fuelTypes.length - 1 && <View style={styles.separator} />} 
+          </View>
+        )}
+      />
+
         </View>
 
         {/* Conditional CO2 Footprint Result */}
@@ -394,91 +438,93 @@ const App = () => {
 
         </KeyboardAvoidingView>
 
-        <View style={styles.container2}>
-  <View style={styles.firstImageContainer}>
+        {!isKeyboardVisible && (
+  <View style={styles.footerContainer}>
     <Image
-      source={require("../../assets/images/mantra.jpg")}
-      style={styles.firstImage}
+      source={require('../../assets/images/mantra.jpg')}
+      style={styles.footerImage1}
+    />
+    <Image
+      source={require('../../assets/images/make-in-India-logo.jpg')}
+      style={styles.footerImage2}
     />
   </View>
-
-  <View style={styles.secondImageContainer}>
-    <Image
-      source={require("../../assets/images/make-in-India-logo.jpg")}
-      style={styles.secondImage}
-    />
-  </View>
-</View>
+)}
       </ImageBackground>
     </View>
   )
 };
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+  },
+  imageBackground: {
+    flex: 1,
+    alignItems: 'center',
+  
+  },
+  headerContainer: {
+    width: '100%',
+    height: '15%',
+    backgroundColor: '#006400',
+    justifyContent: 'center',
+  },
+  headerText: {
+    color: '#fff',
+    fontSize: 24,
+    textAlign: 'center',
+    marginTop: 40,
+  },
+  formContainer: {
+    flex: 1,
+    width: '100%',
+
+  },
+  formWrapper: {
+    marginTop: 10,
+    width: '100%',
+  
+  },
+
+  footerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    marginVertical: 20,
+    width: '100%',
+  },
+  footerImage1: {
+    width: 50,
+    height: 40,
+    resizeMode: 'contain',
+  },
+  footerImage2: {
+    width: 50,
+    height: 50,
+    resizeMode: 'contain',
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(247, 238, 243, 0.6)', 
+  },
+
+
   animatedView: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
   },
   container: {
-    width: 200,
-    height: 250,
+    width: 380,
+    height: 350,
   },
 
-  container1: {
-    width: '80%',
-    alignSelf: 'center',
-  },
-  buttonGap: {
-    height: 8, // Adds a gap between buttons
-  },
-  button: {
-    backgroundColor: '#004d00', // Green background
-    padding: 15,
-    borderRadius: 5,
-    alignItems: 'center',
-    width: '100%', // Full width of the container
-  },
-  buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-  },
-  selectedPrinterText: {
-    textAlign: 'center',
-  },
-  
-  container2: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between', // for equal spacing between items
-    alignItems: 'center',
-    width: '100%',
-
-  },
-  firstImageContainer: {
-    width: '25%',
-    marginLeft: 8, // Replaces the ml-2 from Tailwind
-  },
-  firstImage: {
-    width: 40,
-    height: 40,
-    marginLeft: 20,
-  },
-  secondImageContainer: {
-    width: '20%',
-  },
-  secondImage: {
-    width: 50,
-    height: 40,
-    aspectRatio: 100 / 28, // Actual aspect ratio of the image
-    resizeMode: 'contain',
-
-  },
 
   card: {
-    backgroundColor: '#778899',
-    margin: 60,
-    padding: 20,
+    backgroundColor: '#006400',
+    margin: 50,
+    padding: 40,
     borderRadius: 10,
     alignItems: 'center',
   },
@@ -486,36 +532,56 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 20,
-    color: '#FFFFFF',
+    color: '#FFF',
   },
   valueContainer: {
     alignItems: 'center',
     marginBottom: 20,
+    
   },
   value: {
     fontSize: 36,
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: '#FFF',
   },
   equivalent: {
     fontSize: 16,
-    color: '#FFFFFF',
+    color: '#FFF',
+
   },
   unit: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: '#FFF',
+  
   },
   plantText: {
     fontSize: 16,
-    color: '#FFFFFF',
     textAlign: 'center',
+    color: '#FFF',
   },
   highlight: {
     fontWeight: 'bold',
-    color: '#228B22',
+    color: '#FFF',
   },
+  dropdown: {
+    height: 50,
 
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    backgroundColor: '#fff',
+  },
+  itemContainer: {
+    padding: 9,
+  },
+  itemText: {
+    fontSize: 16,
+  },
+  separator: {
+    height: 1,
+    backgroundColor: '#ccc',
+    marginHorizontal: 10,
+  },
 
 
 });
