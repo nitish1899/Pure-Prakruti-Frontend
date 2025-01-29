@@ -353,12 +353,12 @@ const styles = StyleSheet.create({
     height: '15%',
     backgroundColor: '#006400',
     justifyContent: 'center',
+    alignItems: 'center',
   },
   headerText: {
     color: '#fff',
     fontSize: 24,
     textAlign: 'center',
-    marginTop: 40,
   },
   formContainer: {
     flex: 1,

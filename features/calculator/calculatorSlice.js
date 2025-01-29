@@ -130,7 +130,7 @@ export const calculatorSlice = createSlice({
         state.status = 'idle';
         state.isAuthenticated = true;
         state.userInfo = action.payload.data;
-        console.log(action.payload.data)
+        // console.log(action.payload.data)
       })
       .addCase(signupAsync.rejected, (state, action) => {
         state.status = 'idle';
@@ -172,7 +172,7 @@ export const calculatorSlice = createSlice({
       .addCase(verifyOtpAsync.fulfilled, (state, action) => {
         state.status = 'idle';
         state.isOtpVerified = true;
-        console.log(action.payload.success);
+        // console.log(action.payload.success);
       })
       .addCase(verifyOtpAsync.rejected, (state, action) => {
         state.status = 'idle';

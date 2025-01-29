@@ -2,7 +2,7 @@
   "expo": {
     "name": "twico2ecalculator",
     "slug": "twico2ecalculator",
-    "version": "1.1.1",
+    "version": "1.1.3",
     "orientation": "portrait",
     "icon": "./assets/pureprakruti.png",
     "userInterfaceStyle": "light",
@@ -27,7 +27,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.nitishco2e.twico2ecalculator",
-      "versionCode": 11
+      "versionCode": 13
     },
     "web": {
       "favicon": "./assets/favicon.png"
