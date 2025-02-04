@@ -2,7 +2,7 @@
   "expo": {
     "name": "Pure Prakruti",
     "slug": "pureprakruti",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/pureprakruti.png",
     "userInterfaceStyle": "light",
@@ -25,7 +25,7 @@
         "foregroundImage": "./assets/pureprakruti.png",
         "backgroundColor": "#ffffff"
       },
-      "versionCode": 2,
+      "versionCode": 3,
       "package": "com.tsilteam.pureprakruti"
     },
     "web": {
