@@ -1,39 +1,41 @@
 import React from "react";
-import {ImageBackground,StyleSheet,  KeyboardAvoidingView,
-  ScrollView, Text, View, Image } from "react-native";
+import {
+  ImageBackground, StyleSheet, KeyboardAvoidingView,
+  ScrollView, Text, View, Image
+} from "react-native";
 
 export default function App() {
   return (
     <View style={styles.mainContainer}>
-      
+
       <ImageBackground
         source={require('../assets/images/Pure Prakriti bg img.jpg')}
         resizeMode="cover"
         style={styles.imageBackground}
       >
-         <View style={styles.overlay} />
-         <View style={styles.headerContainer}>
-                  <Text style={styles.headerText}>Welcome</Text>
-                </View>
-                        <KeyboardAvoidingView behavior="padding" style={styles.formContainer}>
-                          <ScrollView>
-      
-      <View className="flex items-center mt-[80px]">
-        <Text className="text-black text-2xl w-[118px] h-[41px] ">About Us</Text>
-        <Text className="text-black w-[301px] h-[194px] mt-[30px]">
-          Since 1956, Transvue Solution India Pvt. Ltd. has been a market leader
-          in logistics.Moving cargo across India within various states has its
-          own unforeseen challenges.Over 66 years of intensive, accurate,
-          efficient, innovative, and dedicated operations have earned TWI a
-          prestigious reputation in the domestic inland transportation industry.
-          Our extensive network covers not only over 100 locations spread all
-          over India but also neighbouring countries like Nepal, Bangladesh, and
-          Bhutan.
-        </Text>
-      </View>
-                </ScrollView>
-              </KeyboardAvoidingView>
- <View style={styles.footerContainer}>
+        <View style={styles.overlay} />
+        <View style={styles.headerContainer}>
+          <Text style={styles.headerText}>Welcome</Text>
+        </View>
+        <KeyboardAvoidingView behavior="padding" style={styles.formContainer}>
+          <ScrollView>
+
+            <View className="flex items-center mt-[80px]">
+              <Text className="text-black text-2xl w-[118px] h-[41px] ">About Us</Text>
+              <Text className="text-black w-[301px] h-[194px] mt-[30px]">
+                Since 1956, Transvue Solution India Pvt. Ltd. has been a market leader
+                in logistics.Moving cargo across India within various states has its
+                own unforeseen challenges.Over 66 years of intensive, accurate,
+                efficient, innovative, and dedicated operations have earned TWI a
+                prestigious reputation in the domestic inland transportation industry.
+                Our extensive network covers not only over 100 locations spread all
+                over India but also neighbouring countries like Nepal, Bangladesh, and
+                Bhutan.
+              </Text>
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
+        <View style={styles.footerContainer}>
           <Image
             source={require('../assets/images/mantra.jpg')}
             style={styles.footerImage1}
@@ -43,7 +45,7 @@ export default function App() {
             style={styles.footerImage2}
           />
         </View>
-       </ImageBackground>
+      </ImageBackground>
     </View>
   );
 }

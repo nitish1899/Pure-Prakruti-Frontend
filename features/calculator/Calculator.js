@@ -141,6 +141,12 @@ const App = () => {
 
         <View style={styles.headerContainer}>
           <Text style={styles.headerText}>नमस्ते {userInfo ? userInfo.userName : "Name"}</Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Profile")}
+            style={styles.iconContainer}
+          >
+            <FontAwesome name="user-o" size={24} color="black" />
+          </TouchableOpacity>
         </View>
 
         <KeyboardAvoidingView behavior="padding" style={styles.formContainer}>
@@ -317,13 +323,24 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '15%',
     backgroundColor: '#006400',
-    justifyContent: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
+    paddingHorizontal: 20, // Optional padding for some space from edges
   },
   headerText: {
     color: '#fff',
     fontSize: 24,
     textAlign: 'center',
+    flex: 1, // This will make the text take available space, pushing the icon to the right
+  },
+  iconContainer: {
+    height: 40,
+    width: 40,
+    backgroundColor: 'white',
+    borderRadius: 20, // Makes it a circle
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   formContainer: {
     flex: 1,
