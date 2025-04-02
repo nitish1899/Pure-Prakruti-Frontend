@@ -4,7 +4,7 @@ import {ipconfig} from "../../app/constants" ;
 export function calculateResult(info) {
   return new Promise(async (resolve, reject) => {
     try{
-    const response = await fetch(`https://pureprakruti.com/api/vehicle/findCO2Emission`, {
+    const response = await fetch(`https://api.pureprakruti.com/api/vehicle/findCO2Emission`, {
       method: "POST",
       body: JSON.stringify(info),
       headers: { "content-type": "application/json" },
@@ -31,7 +31,7 @@ export function login(loginInfo) {
   return new Promise(async (resolve, reject) => {
     try{
       // console.log(ipconfig)
-    const response = await fetch(`https://pureprakruti.com/api/auth/login`, {
+    const response = await fetch(`https://api.pureprakruti.com/api/auth/login`, {
       method: "POST",
       body: JSON.stringify(loginInfo),
       headers: { "content-type": "application/json" },
@@ -56,7 +56,7 @@ export function login(loginInfo) {
 export function signup(signupInfo) {
   return new Promise(async (resolve, reject) => {
     try{
-    const response = await fetch(`https://pureprakruti.com/api/auth/signup`, {
+    const response = await fetch(`https://api.pureprakruti.com/api/auth/signup`, {
       method: "POST",
       body: JSON.stringify(signupInfo),
       headers: { "content-type": "application/json" },
@@ -78,7 +78,7 @@ export function signup(signupInfo) {
 export function verifyOtp(otp) {
   return new Promise(async (resolve, reject) => {
     try{
-    const response = await fetch(`https://pureprakruti.com/api/otp/verify`, {
+    const response = await fetch(`https://api.pureprakruti.com/api/otp/verify`, {
       method: "POST",
       body: JSON.stringify(otp),
       headers: { "content-type": "application/json" },
@@ -99,7 +99,7 @@ export function verifyOtp(otp) {
 export function sendNumber(number) {
   return new Promise(async (resolve, reject) => {
     try{
-    const response = await fetch(`https://pureprakruti.com/api/otp/send`, {
+    const response = await fetch(`https://api.pureprakruti.com/api/otp/send`, {
       method: "POST",
       body: JSON.stringify(number),
       headers: { "content-type": "application/json" },
