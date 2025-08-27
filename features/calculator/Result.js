@@ -105,185 +105,246 @@ const App = () => {
       printerUrl: selectedPrinter?.url, // iOS only
     });
   };
-
+  const recommendedTrees = result ? Math.ceil(result.co2Emission / 1000) * 12 : 0;
   const html = `      
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Certificate of CO2 Emission</title>
-    <style>
-        @font-face {
-            font-family: 'Magnolia Script';
-            src: url('MagnoliaScript.ttf') format('truetype');
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Certificate of CO₂ Emission</title>
+  <style>
+    @page {
+      size: A4; /* Full page A4 */
+      margin: 0;
+    }
 
-        body {
-            font-family: 'Playfair Display', serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f8f9fa;
-            margin: 0;
-        }
+body {
+  margin: 0;
+  padding: 0;
+}
 
-        .certificate {
-            border: 10px solid #D4AF37;
-            padding: 30px;
-            width: 700px;
-            text-align: center;
-            background-color: #fff;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-            position: relative;
-            background: url('https://www.toptal.com/designers/subtlepatterns/patterns/symphony.png');
-        }
+.page {
+  width: 210mm;
+  height: 297mm;
+  background: #f7f7f7; /* background now applies in PDF */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-        .certificate h1 {
-            font-size: 36px;
-            margin-bottom: 20px;
-            font-style: italic;
-            font-family: 'Magnolia Script', cursive;
-            color: #D4AF37;
-        }
+    .certificate {
+      position: relative;
+      width: 210mm;
+      height: 297mm; /* A4 fixed */
+      margin: auto;
+      background: #fff;
+      border: 20px solid #0d47a1; /* outer frame */
+      box-sizing: border-box;
+      padding: 60px 50px 120px 50px; /* bottom padding to leave space for footer */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
 
-        .certificate p {
-            font-size: 18px;
-            margin: 10px 0;
-        }
+    /* HEADER */
+    .header {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      margin-bottom: 20px;
+    }
 
-        .certificate .highlight {
-            font-weight: bold;
-            color: #2c3e50;
-        }
+    .header .left {
+      font-size: 14px;
+      text-align: left;
+    }
 
-        .top-section {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
+    .header .center img {
+      height: 120px;
+    }
 
-        .top-section p {
-            margin: 0;
-            font-size: 16px;
-        }
+    .header .right {
+      text-align: right;
+    }
 
-        .logos {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 10px;
-        }
+    .header .right img {
+      display: block;
+      margin: 8px auto;
+    }
 
-        .logos-left,
-        .logos-right {
-            display: flex;
-            flex-direction: column;
-        }
+    /* TITLE */
+    .certificate-heading {
+      text-align: center;
+      margin: 20px 0;
+    }
 
-        .logos-left a img {
-            height: 20px;
-            margin-bottom: 5px;
-        }
+    .certificate-heading h1 {
+      font-size: 32px;
+      color: #0d47a1;
+      margin: 0;
+      text-transform: uppercase;
+      border-bottom: 2px solid #0d47a1;
+      display: inline-block;
+      padding-bottom: 5px;
+    }
 
-        .logos-right img {
-            height: 60px;
-            width: 60px;
-            margin-right: 5px;
-            margin-bottom: 5px;
-        }
+    .certificate-heading h2 {
+      font-size: 20px;
+      color: #444;
+      margin: 10px 0 30px;
+      letter-spacing: 1px;
+    }
 
-        .info-section p {
-            text-align: left;
-            margin: 5px 0;
-            font-size: 7px;
-        }
+    /* CONTENT */
+    .certificate-body {
+      flex-grow: 1;
+      text-align: center;
+    }
 
-        .signature-section {
-            margin-top: 40px;
-            text-align: right;
-        }
+    .certificate-body p {
+      font-size: 18px;
+      line-height: 1.7;
+    }
 
-        .signature-line {
-            margin-top: 20px;
-            border-top: 1px solid #000;
-            width: 250px;
-            margin-left: auto;
-            margin-right: 0;
-        }
+    .highlight {
+      color: #002060;
+      font-weight: bold;
+    }
 
-        .issuer-section {
-            margin-top: 40px;
-            text-align: center;
-        }
-    </style>
- 
+    /* DATE SECTION */
+    .details {
+      display: flex;
+      justify-content: center;
+      gap: 120px;
+      margin-bottom: 30px;
+    }
+
+    .detail-item {
+      text-align: center;
+    }
+
+    .date {
+      font-size: 16px;
+      font-weight: 600;
+      border-bottom: 1px solid #c0a060;
+      padding-bottom: 3px;
+      margin-bottom: 5px;
+    }
+
+    .label {
+      font-size: 12px;
+      font-weight: bold;
+      color: #003366;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* FOOTER FIXED */
+    .footer {
+      position: absolute;
+      bottom: 40px;
+      left: 50px;
+      right: 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .signature {
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .signature img {
+      height: 60px;
+      margin-bottom: 5px;
+    }
+
+    .issuer {
+      text-align: right;
+      font-size: 16px;
+      font-weight: bold;
+      color: #0d47a1;
+    }
+
+    .date-section {
+      text-align: right;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+
+  </style>
 </head>
 
 <body>
-    <div class="certificate">
-        <div class="logos">
-            <div class="logos-left">
-                <a target="blank" href="https://dpiit.gov.in" class="logo nonsticky" data-page="home-page">
-                    <img src="https://github.com/nitish1899/Image/blob/main/DPIIT-1719464112334.png?raw=true"
-                        alt="DPIIT Logo">
-                </a>
-                <a href="https://www.startupindia.gov.in" class="logo nonsticky" data-page="home-page">
-                    <img src="https://github.com/nitish1899/Image/blob/main/Logo1.png?raw=true"
-                        alt="Startup India Logo">
-                </a>
-            </div>
-            <div class="logos-right">
-                <img src="	https://raw.githubusercontent.com/nitish1899/Image/main/pureprukriti.png
-                " alt="TSIL Logo">
-            </div>
-        </div>
-        <div class="top-section">
-            <p>Certificate Number: <span class="highlight" id="certificateNumber">${result && result.certificateNumber}</span></p>
-            <p>Date: <span class="highlight" id="date">${result && result.certificateIssueDate}</span></p>
-        </div>
-        <h1>Certificate of CO2 Emission</h1>
-        <p>This is to certify that the vehicle owned/hired by</p>
-        <p class="highlight" id="vehicleOwner">${userInfo ? userInfo.userName : "Name"}</p>
-        <p>with vehicle number</p>
-        <p class="highlight" id="vehicleNumber">${result && result.vehicleNumber}</p>
-        <p>has emitted</p>
-        <p><span class="highlight" id="co2Emission">${result && (result.co2Emission / 1000).toFixed(1)}</span> unit CO2</p>
-
-        <div class="signature-section">
-            <img src="https://raw.githubusercontent.com/nitish1899/Image/main/sign1.png" alt="Signature"  height="50" width="200">
-            <p>Authorized Signature</p>
-        </div>
-
-        <div class="issuer-section">
-            <p>Issued by:</p>
-            <p class="highlight">Transvue Solution India Pvt. Ltd.</p>
-        </div>
-
-        <div style="display: flex;">
-            <div class="info-section">
-                <p>* The above result is based on user input.</p>
-                <p>* Additional details are based on US/UK research.</p> 
-            </div>
-            <div class="time-section" style="margin-left: auto;" style="margin-right: 1px;">
-                <p>Time: <span class="highlight" id="time">${new Date().toLocaleTimeString()}</span></p>
-            </div>
-        </div>
+<div class="page">
+  <div class="certificate">
+    <!-- HEADER -->
+    <div class="header">
+      <div class="left">
+        <p><strong>CERTIFICATE NO:</strong><br>
+          <span class="highlight" id="certificateNumber">${result && result.certificateNumber}</span>
+        </p>
+      </div>
+      <div class="center">
+        <img
+          src="https://raw.githubusercontent.com/jagdish97897/exchange-backend/refs/heads/main/141237_a99dc7bf9310471cb7b315bf6b1f13ae%7Emv2.avif"
+          alt="DPIIT Logo" style="height:280px;">
+      </div>
+ <!-- Right Section -->
+      <div class="right" style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
+        <img src="https://raw.githubusercontent.com/nitish1899/Image/main/pureprukriti.png" alt="TSIL Logo"
+          style="height:120px; display:block; align-items:center margin-bottom:10px;">
+        <img src="https://github.com/nitish1899/Image/blob/main/Logo1.png?raw=true" alt="Startup India Logo"
+          style="height:25px;">
+      </div>
     </div>
-       <script>
-        window.onload = function() {
-            const now = new Date();
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            const dateStr = now.toLocaleDateString('en-US', options);
-            const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
-            document.getElementById('date').innerText = dateStr;
-            document.getElementById('time').innerText = timeStr;
-        };
-    </script>
-</body>
+<!-- Certificate Heading -->
+<div class="certificate-heading">
+  <h1>Certificate of Eco Excellence</h1>
+  <h2>CO₂ Emission Certification</h2>
+</div>
 
+<div class="certificate-body">
+  <p>This is to certify that <span class="highlight" id="vehicleOwner">${userInfo ? userInfo.userName : "Name"}</span>, 
+     with vehicle number <span class="highlight" id="vehicleNumber">${result && result.vehicleNumber}</span>, 
+     has emitted <span class="highlight" id="co2Emission">${result && (result.co2Emission / 1000).toFixed(1)}</span> unit CO₂.</p>
+
+       <p>As part of our commitment to sustainability, it is recommended to offset this footprint by planting <span style="color:green; font-weight:bold;">${recommendedTrees}</span> 🌳.</p>
+</div>
+
+
+      <div class="details">
+        <div class="detail-item">
+          <p class="date">${result && result.certificateIssueDate}</p>
+          <p class="label">Date of Issue</p>
+        </div>
+        <div class="detail-item">
+          <p class="date">31-12-2030</p>
+          <p class="label">Valid Upto</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <div class="signature">
+        <img src="https://raw.githubusercontent.com/nitish1899/Image/main/sign1.png" alt="Signature">
+        <p>Authorized Signature</p>
+      </div>
+      <div class="issuer">
+        Issued by:<br>
+        <span>Transvue Solution India Pvt. Ltd.</span>
+        <div class="date-section">
+          Time: <span class="highlight" id="time">${new Date().toLocaleTimeString()}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</body>
 </html>
         `;
   const printToFile = async () => {
@@ -347,86 +408,94 @@ const App = () => {
                ]}
                className="absolute w-[100%] shadow-lg  flex items-center justify-center"
              >
-          <View style={styles.card}>
-        <Text style={styles.title}>Total Carbon Footprint</Text>
-        <View style={styles.valueContainer}>
-          <Text style={styles.value}>{result && result.co2Emission} kg</Text>
-          <Text style={styles.equivalent}>Equivalent to</Text>
-          <Text style={styles.unit}>{result && (result.co2Emission / 1000).toFixed(1)} unit</Text>
-        </View>
-        <Text style={styles.plantText}>
-          Plant <Text style={styles.highlight}> {result && (Math.ceil(result.co2Emission / 1000)) * 12} trees</Text> 🌳 to offset for your CO2 Footprint
-        </Text>
-        <View
-      style={{
-        position: "absolute",
-        bottom: 1,
-        right: 10,
-        flexDirection: "row",
-        alignItems: "center",
-      }}
-    >
-      <TouchableOpacity onPress={print} style={{ marginRight: 10 }}>
-        <Ionicons name="print-outline" size={30} color="#4CAF50" />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={printToFile}>
-        <Ionicons name="share-social-outline" size={30} color="#2196F3" />
-      </TouchableOpacity>
-    </View>
-      </View>
+<View style={styles.card}>
+  <Text style={styles.title}>Total Carbon Footprint</Text>
+
+  <View style={styles.valueContainer}>
+    <Text style={styles.value}>
+      {result && result.co2Emission} kg
+    </Text>
+    <Text style={styles.equivalent}>Equivalent to</Text>
+    <Text style={styles.unit}>
+      {result && (result.co2Emission / 1000).toFixed(1)} unit
+    </Text>
+  </View>
+
+  <Text style={styles.plantText}>
+    Plant
+    <Text style={styles.highlight}>
+      {" "}
+      {result && (Math.ceil(result.co2Emission / 1000)) * 12} trees
+    </Text>{" "}
+    🌳 to offset your CO2 Footprint
+  </Text>
+
+  {/* Buttons placed in normal flow at bottom */}
+  <View style={styles.actionRow}>
+    <TouchableOpacity onPress={print} style={{ marginRight: 20 }}>
+      <Ionicons name="print-outline" size={28} color="#4CAF50" />
+    </TouchableOpacity>
+    <TouchableOpacity onPress={printToFile}>
+      <Ionicons name="share-social-outline" size={28} color="#2196F3" />
+    </TouchableOpacity>
+  </View>
+</View>
+
 
 
              </Animated.View>}
             </View>
 
-              <View className="m-10  w-[80%]">
+<View className="m-6 w-[85%] self-center">
 
-                        {/* Fuel Type Selection */}
-        <Text className="text-lg font-semibold mt-6 mb-2">
-          Compare your CO2 emissions:
-        </Text>
-        <View className="border rounded-lg bg-white shadow-md">
-   
-
-          <Dropdown
-        style={[styles.dropdown, isFocus && { borderColor: '#007BFF' }]}
-        data={fuelTypes}
-        labelField="label"
-        valueField="value"
-        placeholder="Select Fuel type"
-        value={selectedFuel}
-        onFocus={() => setIsFocus(true)}
-        onBlur={() => setIsFocus(false)}
-        onChange={(item) => setSelectedFuel(item.value)}
-        renderItem={(item, index) => (
-          <View>
-            <View style={styles.itemContainer}>
-              <Text style={styles.itemText}>{item.label}</Text>
-            </View>
-            {index < fuelTypes.length - 1 && <View style={styles.separator} />} 
+  {/* Fuel Type Selection */}
+  <Text className="text-xl font-semibold mt-4 mb-3 text-gray-700">
+    Compare Your CO2 Emissions
+  </Text>
+  <View className="border border-gray-300 rounded-xl bg-white shadow-lg overflow-hidden">
+    <Dropdown
+      style={[
+        styles.dropdown,
+        isFocus && { borderColor: '#1E40AF', borderWidth: 2 }
+      ]}
+      data={fuelTypes}
+      labelField="label"
+      valueField="value"
+      placeholder="Select Fuel Type"
+      value={selectedFuel}
+      onFocus={() => setIsFocus(true)}
+      onBlur={() => setIsFocus(false)}
+      onChange={(item) => setSelectedFuel(item.value)}
+      renderItem={(item, index) => (
+        <View key={index}>
+          <View style={styles.itemContainer}>
+            <Text style={styles.itemText}>{item.label}</Text>
           </View>
-        )}
-      />
-
+          {index < fuelTypes.length - 1 && <View style={styles.separator} />}
         </View>
+      )}
+    />
+  </View>
 
-        {/* Conditional CO2 Footprint Result */}
-        {selectedFuel !== "" && (
-          <ImageBackground
+  {/* Conditional CO2 Footprint Result */}
+  {selectedFuel !== "" && (
+ <ImageBackground
           source={require("../../assets/images/forest.jpg")}
             className="mt-6 p-4 rounded-lg overflow-hidden shadow-md"
             resizeMode="cover"
           >
-            <View className=" bg-opacity-50 p-4 rounded-lg">
-              <Text className="text-white text-md">Your Carbon Footprint: 200kg</Text>
-              <Text className="text-white text-lg font-bold mt-2">
-                Your Carbon Footprint, if you Used {selectedFuel.charAt(0).toUpperCase() + selectedFuel.slice(1)}:{" "}
-                {fuelEmissions[selectedFuel]}kg
-              </Text>
-            </View>
-          </ImageBackground>
-        )}
-            </View>
+      <View className=" bg-opacity-40 flex-1 justify-center p-5 rounded-2xl">
+        <Text className="text-white text-sm">Your Current Carbon Footprint: 200kg</Text>
+        <Text className="text-white text-xl font-bold mt-2">
+          Using{" "}
+          {selectedFuel.charAt(0).toUpperCase() + selectedFuel.slice(1)}:{" "}
+          {fuelEmissions[selectedFuel]}kg
+        </Text>
+      </View>
+    </ImageBackground>
+  )}
+</View>
+
           </ScrollView>
 
         </KeyboardAvoidingView>
@@ -438,7 +507,7 @@ const App = () => {
       style={styles.footerImage1}
     />
     <Image
-      source={require('../../assets/images/make-in-India-logo.jpg')}
+      source={require('../../assets/images/make-in-India-logo.png')}
       style={styles.footerImage2}
     />
   </View>
@@ -451,34 +520,141 @@ const App = () => {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
+    backgroundColor: "#f5f7fa",
   },
   imageBackground: {
     flex: 1,
-    alignItems: 'center',
-  
+    alignItems: "center",
   },
+
+  // ✅ Header (curved with shadow)
   headerContainer: {
-    width: '100%',
-    height: '15%',
-    backgroundColor: '#006400',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: "100%",
+    height: "15%",
+    backgroundColor: "#1B5E20",
+    justifyContent: "center",
+    alignItems: "center",
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    elevation: 5,
+    shadowColor: "#000",
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 3 },
   },
   headerText: {
-    color: '#fff',
-    fontSize: 24,
-    textAlign: 'center',
+    color: "#fff",
+    fontSize: 26,
+    fontWeight: "bold",
+    letterSpacing: 1,
   },
+
+  // ✅ Overlay tint
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(247, 238, 243, 0.6)",
+  },
+
   formContainer: {
     flex: 1,
-    width: '100%',
+    width: "100%",
+    paddingHorizontal: 20,
+    paddingBottom: 30,
   },
   formWrapper: {
     marginTop: 10,
-    width: '100%',
-  
+    width: "100%",
   },
 
+  // ✅ Lottie + Animation wrapper
+  animatedView: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  container: {
+    width: 320,
+    height: 300,
+  },
+
+ card: {
+    backgroundColor: "#fff",
+    borderRadius: 16,
+    padding: 20,
+    marginVertical: 15,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
+    elevation: 6,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: "700",
+    color: "#333",
+    marginBottom: 12,
+    textAlign: "center",
+  },
+  valueContainer: {
+    alignItems: "center",
+    marginVertical: 12,
+  },
+  value: {
+    fontSize: 28,
+    fontWeight: "bold",
+    color: "#4CAF50",
+    marginBottom: 6,
+  },
+  equivalent: {
+    fontSize: 14,
+    color: "#777",
+    marginBottom: 4,
+  },
+  unit: {
+    fontSize: 20,
+    fontWeight: "600",
+    color: "#2196F3",
+  },
+  plantText: {
+    fontSize: 14,
+    textAlign: "center",
+    color: "#555",
+    marginTop: 15,
+    lineHeight: 20,
+  },
+  highlight: {
+    fontWeight: "bold",
+    color: "#FF5722",
+  },
+  actionRow: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    marginTop: 20,
+  },
+
+  // ✅ Dropdown (modern neumorphic)
+  dropdown: {
+    height: 55,
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    backgroundColor: "#fff",
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
+  },
+  itemContainer: {
+    padding: 12,
+  },
+  itemText: {
+    fontSize: 16,
+    color: "#333",
+  },
+  separator: {
+    height: 1,
+    backgroundColor: "#e0e0e0",
+  },
   footerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -492,82 +668,11 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   footerImage2: {
-    width: 50,
-    height: 50,
+    width: 70,
+    height: 60,
     resizeMode: 'contain',
   },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(247, 238, 243, 0.6)', 
-  },
-  animatedView: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  container: {
-    width: 380,
-    height: 350,
-  },
-  card: {
-    backgroundColor: '#006400',
-    margin: 50,
-    padding: 40,
-    borderRadius: 10,
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    color: '#FFF',
-  },
-  valueContainer: {
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  value: {
-    fontSize: 36,
-    fontWeight: 'bold',
-    color: '#FFF',
-  },
-  equivalent: {
-    fontSize: 16,
-    color: '#FFF',
-  },
-  unit: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#FFF',
-  },
-  plantText: {
-    fontSize: 16,
-    textAlign: 'center',
-    color: '#FFF',
-  },
-  highlight: {
-    fontWeight: 'bold',
-    color: '#FFF',
-  },
-  dropdown: {
-    height: 50,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    backgroundColor: '#fff',
-  },
-  itemContainer: {
-    padding: 9,
-  },
-  itemText: {
-    fontSize: 16,
-  },
-  separator: {
-    height: 1,
-    backgroundColor: '#ccc',
-    // marginHorizontal: 0,
-  },
-
-
 });
+
 
 export default App;

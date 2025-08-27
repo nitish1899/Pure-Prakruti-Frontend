@@ -14,6 +14,7 @@ import Splash1 from './screens/Splash1';
 import Splash2 from './screens/Splash2';
 import { selectIsAuthenticated } from './features/calculator/calculatorSlice';
 import { useSelector } from 'react-redux';
+import TermsScreen from './features/calculator/TermsScreen ';
 const Stack = createNativeStackNavigator();
 
 export default () => {
@@ -59,6 +60,7 @@ export default () => {
      ) : (
       <>
    <Stack.Screen name="Login" component={Login} />
+   <Stack.Screen name="TermsScreen" component={TermsScreen} />
    <Stack.Screen name="Splash1" component={Splash1} />
    <Stack.Screen name="Splash2" component={Splash2} />
    <Stack.Screen name="Signup" component={Signup} />

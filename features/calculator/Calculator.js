@@ -129,186 +129,242 @@ const App = () => {
   };
 
 
-
-  return (
+ return (
     <View style={styles.mainContainer}>
       <ImageBackground
-        source={require('../../assets/images/Pure Prakriti bg img.jpg')}
+        source={require("../../assets/images/Pure Prakriti bg img.jpg")}
         resizeMode="cover"
         style={styles.imageBackground}
       >
+        {/* Overlay */}
         <View style={styles.overlay} />
 
+        {/* Header */}
         <View style={styles.headerContainer}>
-          <Text style={styles.headerText}>नमस्ते {userInfo ? userInfo.userName : "Name"}</Text>
+          <Text style={styles.headerText}>
+            नमस्ते {userInfo ? userInfo.userName : "Name"}
+          </Text>
           <TouchableOpacity
             onPress={() => navigation.navigate("Profile")}
             style={styles.iconContainer}
           >
-            <FontAwesome name="user-o" size={24} color="black" />
+            <FontAwesome name="user-o" size={22} color="#004d00" />
           </TouchableOpacity>
         </View>
 
+        {/* Form */}
         <KeyboardAvoidingView behavior="padding" style={styles.formContainer}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <Formik initialValues={{
-              VechileNumber: '', SourcePincode: '', DestinationPincode: '', LoadedWeight: '', VechileType: '', MobilisationDistance: '', DeMobilisationDistance: '', gstin: ''
-            }}
+            <Formik
+              initialValues={{
+                VechileNumber: "",
+                SourcePincode: "",
+                DestinationPincode: "",
+                LoadedWeight: "",
+                VechileType: "",
+                MobilisationDistance: "",
+                DeMobilisationDistance: "",
+                gstin: "",
+              }}
               onSubmit={async (values) => {
                 setIsLoading(true);
                 values.VechileNumber = box2 + box3;
                 dispatch(calculateResultAsync(values));
               }}
             >
-              {({ handleChange, handleBlur, handleSubmit, values, errors, resetForm }) => {
+              {({
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                values,
+                resetForm,
+              }) => {
                 useFocusEffect(
-                  useCallback(() => {
+                  React.useCallback(() => {
                     resetForm();
-                    setBox2('');
-                    setBox3(''); // Reset form when screen is focused (on back navigation)
+                    setBox2("");
+                    setBox3("");
                   }, [])
                 );
-                return (
+ return (
+    <View style={styles.formWrapper}>
+      <Text style={styles.subtitle}>Trip Details</Text>
 
-                  <View style={styles.formWrapper}>
+      {/* Vehicle Number */}
+      <Text style={styles.label}>Vehicle Number</Text>
+      <View style={styles.vehicleRow}>
+        <View style={styles.iconInputWrapper}>
+          <FontAwesome name="car" size={20} color="#555" style={styles.icon} />
+          <TextInput
+            value={box2}
+            onChangeText={handleBox2Change}
+            maxLength={6}
+            ref={box2Ref}
+            keyboardType="default"
+            style={styles.inputHalf}
+            placeholder="AB12"
+          />
+        </View>
 
-                    <Text style={styles.subtitle}>Trip Details</Text>
+        <View style={styles.iconInputWrapper}>
+          <FontAwesome
+            name="sort-numeric-asc"
+            size={20}
+            color="#555"
+            style={styles.icon}
+          />
+          <TextInput
+            value={box3}
+            onChangeText={handleBox3Change}
+            onBlur={handleBox3Blur}
+            keyboardType="numeric"
+            maxLength={4}
+            ref={box3Ref}
+            style={styles.inputHalf}
+            placeholder="1234"
+          />
+        </View>
+      </View>
 
-                    <Text style={styles.label}>Vehicle Number</Text>
+      {/* Source */}
+      <Text style={styles.label}>Source Pincode</Text>
+      <View style={styles.iconInputWrapper}>
+        <FontAwesome name="map-marker" size={20} color="#555" style={styles.icon} />
+        <TextInput
+          onChangeText={handleChange("SourcePincode")}
+          onBlur={handleBlur("SourcePincode")}
+          value={values.SourcePincode}
+          placeholder="Source Pincode"
+          keyboardType="numeric"
+          maxLength={6}
+          style={styles.input}
+        />
+      </View>
 
+      {/* Destination */}
+      <Text style={styles.label}>Destination Pincode</Text>
+      <View style={styles.iconInputWrapper}>
+        <FontAwesome
+          name="map-marker"
+          size={20}
+          color="#555"
+          style={styles.icon}
+        />
+        <TextInput
+          onChangeText={handleChange("DestinationPincode")}
+          onBlur={handleBlur("DestinationPincode")}
+          value={values.DestinationPincode}
+          placeholder="Destination Pincode"
+          keyboardType="numeric"
+          maxLength={6}
+          style={styles.input}
+        />
+      </View>
 
-                    <View className="flex-row  space-x-2 ">
-                      <TextInput
-                        value={box2}
-                        onChangeText={handleBox2Change}
-                        maxLength={6}
-                        ref={box2Ref}
-                        keyboardType="default"
-                        className="bg-white p-2 rounded-md border border-gray-300 mb-2 flex-1"
-                      />
-                      <TextInput
-                        value={box3}
-                        onChangeText={handleBox3Change}
-                        onBlur={handleBox3Blur}
-                        keyboardType="numeric"
-                        maxLength={4}
-                        ref={box3Ref}
-                        className="bg-white p-2 rounded-md border border-gray-300 mb-2 flex-1"
-                      />
-                    </View>
+      {/* Weight */}
+      <Text style={styles.label}>Loaded Weight (kg)</Text>
+      <View style={styles.iconInputWrapper}>
+        <FontAwesome
+          name="balance-scale"
+          size={20}
+          color="#555"
+          style={styles.icon}
+        />
+        <TextInput
+          onChangeText={handleChange("LoadedWeight")}
+          onBlur={handleBlur("LoadedWeight")}
+          value={values.LoadedWeight}
+          placeholder="Loaded Weight"
+          keyboardType="numeric"
+          style={styles.input}
+        />
+      </View>
 
-                    <View >
-                      <View >
-                        <Text style={styles.label}>Source Pincode</Text>
-                        <TextInput
-                          onChangeText={handleChange('SourcePincode')}
-                          onBlur={handleBlur('SourcePincode')}
-                          value={values.SourcePincode}
-                          placeholder='Source Pincode'
-                          keyboardType="numeric"
-                          maxLength={6}
-                          style={styles.input}
-                        />
+      {/* GSTIN */}
+      <Text style={styles.label}>GSTIN</Text>
+      <View style={styles.iconInputWrapper}>
+        <FontAwesome name="id-card" size={20} color="#555" style={styles.icon} />
+        <TextInput
+          onChangeText={handleChange("gstin")}
+          onBlur={handleBlur("gstin")}
+          value={values.gstin.toUpperCase()}
+          placeholder="GSTIN"
+          maxLength={16}
+          style={styles.input}
+        />
+      </View>
 
-                        <Text style={styles.label}>Destination Pincode</Text>
-                        <TextInput
-                          onChangeText={handleChange('DestinationPincode')}
-                          onBlur={handleBlur('DestinationPincode')}
-                          value={values.DestinationPincode}
-                          placeholder='Destination Pincode'
-                          keyboardType="numeric"
-                          maxLength={6}
-                          style={styles.input}
-                        />
-                        <Text style={styles.label}>Loaded Weight (in kg)</Text>
-                        <TextInput
-                          onChangeText={handleChange('LoadedWeight')}
-                          onBlur={handleBlur('LoadedWeight')}
-                          value={values.LoadedWeight}
-                          placeholder='Loaded Weight (in kg)'
-                          keyboardType="numeric"
-                          style={styles.input}
-                        />
-                        <Text style={styles.label}>GSTIN</Text>
-                        <TextInput
-                          onChangeText={handleChange('gstin')}
-                          onBlur={handleBlur('gstin')}
-                          value={values.gstin.toUpperCase()}
-                          placeholder='GSTIN'
-                          maxLength={16}
-                          style={styles.input}
-                        />
-                      </View>
-                    </View>
+      {/* Toggle extra */}
+      <TouchableOpacity onPress={toggleAdditionalDetails}>
+        <Text style={styles.toggleText}>
+          Additional Details (optional) {showAdditionalDetails ? "▲" : "▼"}
+        </Text>
+      </TouchableOpacity>
 
-                    <TouchableOpacity onPress={toggleAdditionalDetails}>
-                      <Text className="text-xl font-[500] mx-auto mb-1 mt-4">
-                        Additional Details (optional) {showAdditionalDetails ? '▲' : '▼'}
-                      </Text>
-                    </TouchableOpacity>
+      {/* Extra fields */}
+      {showAdditionalDetails && (
+        <>
+          <Text style={styles.label}>Mobilisation Distance</Text>
+          <View style={styles.iconInputWrapper}>
+            <FontAwesome name="road" size={20} color="#555" style={styles.icon} />
+            <TextInput
+              onChangeText={handleChange("MobilisationDistance")}
+              onBlur={handleBlur("MobilisationDistance")}
+              value={values.MobilisationDistance}
+              placeholder="Mob Distance (km)"
+              keyboardType="numeric"
+              style={styles.input}
+            />
+          </View>
 
-                    {showAdditionalDetails && (
-                      <>
-                        <Text style={styles.label}>Mobilisation Distance</Text>
-                        <TextInput
-                          onChangeText={handleChange('MobilisationDistance')}
-                          onBlur={handleBlur('MobilisationDistance')}
-                          value={values.MobilisationDistance}
-                          placeholder='Mob Distance (km)'
-                          keyboardType="numeric"
-                          style={styles.input}
-                        />
-                        <Text style={styles.label}>DeMobilisation Distance</Text>
-                        <TextInput
-                          onChangeText={handleChange('DeMobilisationDistance')}
-                          onBlur={handleBlur('DeMobilisationDistance')}
-                          value={values.DeMobilisationDistance}
-                          placeholder='DeMob Distance (km)'
-                          keyboardType="numeric"
-                          style={styles.input}
-                        />
-                      </>
-                    )}
+          <Text style={styles.label}>DeMobilisation Distance</Text>
+          <View style={styles.iconInputWrapper}>
+            <FontAwesome name="road" size={20} color="#555" style={styles.icon} />
+            <TextInput
+              onChangeText={handleChange("DeMobilisationDistance")}
+              onBlur={handleBlur("DeMobilisationDistance")}
+              value={values.DeMobilisationDistance}
+              placeholder="DeMob Distance (km)"
+              keyboardType="numeric"
+              style={styles.input}
+            />
+          </View>
+        </>
+      )}
 
-                    <View style={{ flex: 1 }}>
-                    </View>
-
-                    <TouchableOpacity onPress={handleSubmit}>
-                      <View style={styles.submitButton}>
-                        {isLoading ? (
-                          <ActivityIndicator size="large" color="#ffffff" />
-                        ) : (
-                          <Text style={styles.submitButtonText}>Submit</Text>
-                        )}
-                        {/* <Text className="text-white text-2xl">Submit</Text> */}
-                      </View>
-                    </TouchableOpacity>
-
-                  </View>
-                );
+      {/* Submit */}
+      <TouchableOpacity onPress={handleSubmit}>
+        <View style={styles.submitButton}>
+          {isLoading ? (
+            <ActivityIndicator size="small" color="#fff" />
+          ) : (
+            <Text style={styles.submitButtonText}>Submit</Text>
+          )}
+        </View>
+      </TouchableOpacity>
+    </View>
+  );
               }}
             </Formik>
-
           </ScrollView>
-
         </KeyboardAvoidingView>
 
+        {/* Footer */}
         {!isKeyboardVisible && (
           <View style={styles.footerContainer}>
             <Image
-              source={require('../../assets/images/mantra.jpg')}
+              source={require("../../assets/images/mantra.jpg")}
               style={styles.footerImage1}
             />
             <Image
-              source={require('../../assets/images/make-in-India-logo.jpg')}
+              source={require("../../assets/images/make-in-India-logo.png")}
               style={styles.footerImage2}
             />
           </View>
         )}
-
       </ImageBackground>
     </View>
-  )
+  );
 };
 
 const styles = StyleSheet.create({
@@ -317,72 +373,107 @@ const styles = StyleSheet.create({
   },
   imageBackground: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: "center",
   },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(255,255,255,0.6)",
+  },
+
+  // Header
   headerContainer: {
-    width: '100%',
-    height: '15%',
-    backgroundColor: '#006400',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 20, // Optional padding for some space from edges
+    width: "100%",
+    height: "14%",
+    backgroundColor: "#004d00",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 20,
+    borderBottomLeftRadius: 18,
+    borderBottomRightRadius: 18,
+    elevation: 4,
   },
   headerText: {
-    color: '#fff',
-    fontSize: 24,
-    textAlign: 'center',
-    flex: 1, // This will make the text take available space, pushing the icon to the right
+    color: "#fff",
+    fontSize: 20,
+    fontWeight: "bold",
+    flex: 1,
   },
   iconContainer: {
-    height: 40,
-    width: 40,
-    backgroundColor: 'white',
-    borderRadius: 20, // Makes it a circle
-    justifyContent: 'center',
-    alignItems: 'center',
+    height: 38,
+    width: 38,
+    backgroundColor: "#fff",
+    borderRadius: 19,
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 3,
   },
+
+  // Form
   formContainer: {
     flex: 1,
-    width: '100%',
-    paddingHorizontal: 20,
-
+    width: "100%",
+    paddingHorizontal: 18,
   },
-  formWrapper: {
-    marginTop: 50,
+ formWrapper: {
+    padding: 20,
   },
   subtitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 20,
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 15,
   },
   label: {
-    alignSelf: "flex-start",
-    fontSize: 16,
-    color: "#073618",
-    fontWeight: "600",
+    fontSize: 14,
     marginTop: 10,
+    marginBottom: 5,
+    fontWeight: "500",
   },
-  input: {
-    backgroundColor: '#fff',
-    padding: 10,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    marginBottom: 10,
-  },
+vehicleRow: {
+  flexDirection: "row",
+  justifyContent: "space-between",
+  marginBottom: 15,
+},
+
+iconInputWrapper: {
+  flexDirection: "row",
+  alignItems: "center",
+  borderWidth: 1,
+  borderColor: "#ccc",
+  borderRadius: 10,
+  paddingHorizontal: 10,
+  flex: 1,
+  marginRight: 8,
+  backgroundColor: "#fff",
+  height: 50,
+},
+
+icon: {
+  marginRight: 8,
+},
+
+inputField: {
+  flex: 1,
+  fontSize: 16,
+  color: "#333",
+},
+
   submitButton: {
-    backgroundColor: '#004d00',
-    padding: 15,
-    borderRadius: 5,
-    alignItems: 'center',
-    marginTop: 10,
+    backgroundColor: "#007BFF",
+    borderRadius: 8,
+    padding: 12,
+    marginTop: 20,
+    alignItems: "center",
   },
   submitButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
   },
+
   footerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -396,13 +487,9 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   footerImage2: {
-    width: 50,
-    height: 50,
+    width: 70,
+    height: 60,
     resizeMode: 'contain',
-  },
-  overlay: {
-    ...StyleSheet.absoluteFillObject, // Covers the entire ImageBackground
-    backgroundColor: 'rgba(247, 238, 243, 0.6)', // Adjust color and opacity
   },
 });
 
