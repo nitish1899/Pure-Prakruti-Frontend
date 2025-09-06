@@ -303,7 +303,7 @@ body {
     </div>
 <!-- Certificate Heading -->
 <div class="certificate-heading">
-  <h1>Certificate of Eco Excellence</h1>
+  <h1>Green Certificate</h1>
   <h2>CO₂ Emission Certification</h2>
 </div>
 

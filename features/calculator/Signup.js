@@ -296,7 +296,7 @@ const SignupScreen = () => {
               By logging in, you agree to our{' '}
               <Text
                 style={styles.linkText}
-                onPress={() => navigation.navigate('Terms')}
+                onPress={() => navigation.navigate('TermsScreen')}
               >
                 Terms & Conditions
               </Text>
