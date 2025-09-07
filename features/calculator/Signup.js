@@ -738,7 +738,7 @@ export default SignupScreen;
 //       style={styles.footerImage1}
 //     />
 //     <Image
-//       source={require('../../assets/images/make-in-India-logo.jpg')}
+//       source={require('../../assets/images/makeIndia.jpg')}
 //       style={styles.footerImage2}
 //     />
 //   </View>

@@ -2,7 +2,7 @@
   "expo": {
     "name": "Pure Prakruti",
     "slug": "pureprakruti",
-    "version": "1.0.3",
+    "version": "1.0.5",
     "orientation": "portrait",
     "icon": "./assets/pureprakruti.png",
     "userInterfaceStyle": "light",
@@ -11,6 +11,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -18,29 +21,18 @@
       "supportsTablet": true
     },
     "android": {
-      "permissions": [
-        "INTERNET"
-      ],
+      "package": "com.yourcompany.pureprakruti",
+      "versionCode": 14,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/pureprakruti.png",
+        "foregroundImage": "./assets/images/pureprakruti.png",
         "backgroundColor": "#ffffff"
       },
-      "versionCode": 4,
-      "package": "com.tsilteam.pureprakruti"
+      "compileSdkVersion": 35,
+      "targetSdkVersion": 35,
+      "permissions": []
     },
     "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
-    "updates": {
-      "url": "https://u.expo.dev/6f7934cd-4b6b-41cd-bb69-88388f08d631"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "00123e41-96a8-40d9-930b-3cd15932d59c"
-      }
+      "favicon": "./assets/pureprakruti.png"
     }
   }
 }

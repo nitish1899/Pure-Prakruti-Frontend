@@ -11,8 +11,12 @@ import { calculateResultAsync, selectUserInfo } from './calculatorSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { Keyboard, Platform } from 'react-native';
 
+
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback } from 'react';
+
+import mantraImage from "../../assets/images/mantra.jpg";
+import makeInIndiaLogo from "../../assets/images/make-in-India-logo.png";
 
 const App = () => {
   const [isChecked, setIsChecked] = useState(false);
@@ -350,18 +354,12 @@ const App = () => {
         </KeyboardAvoidingView>
 
         {/* Footer */}
-        {!isKeyboardVisible && (
-          <View style={styles.footerContainer}>
-            <Image
-              source={require("../../assets/images/mantra.jpg")}
-              style={styles.footerImage1}
-            />
-            <Image
-              source={require("../../assets/images/make-in-India-logo.png")}
-              style={styles.footerImage2}
-            />
-          </View>
-        )}
+{!isKeyboardVisible && (
+  <View style={styles.footerContainer}>
+    <Image source={mantraImage} style={styles.footerImage1} />
+    <Image source={makeInIndiaLogo} style={styles.footerImage2} />
+  </View>
+)}
       </ImageBackground>
     </View>
   );
