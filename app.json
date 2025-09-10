@@ -2,7 +2,7 @@
   "expo": {
     "name": "Pure Prakruti",
     "slug": "pureprakruti",
-    "version": "1.0.3",
+    "version": "1.0.5",
     "orientation": "portrait",
     "icon": "./assets/pureprakruti.png",
     "userInterfaceStyle": "light",
@@ -18,7 +18,7 @@
     "android": {
       "permissions": ["INTERNET"],
       "adaptiveIcon": {
-        "foregroundImage": "./assets/pureprakruti.png",
+        "foregroundImage": "./assets/images/pureprakruti.png",
         "backgroundColor": "#ffffff"
       },
       "versionCode": 20,             

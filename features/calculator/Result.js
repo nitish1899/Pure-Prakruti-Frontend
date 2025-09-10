@@ -17,8 +17,9 @@ import LottieView from 'lottie-react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Dropdown } from 'react-native-element-dropdown';
 import { Keyboard } from 'react-native';
+import mantraImage from '../../assets/images/mantra.jpg';
+import makeInIndiaLogo from '../../assets/images/make-in-India-logo.png';
 const { width } = Dimensions.get('window');
-
 
 const App = () => {
   const userBoy = "rocky";
@@ -500,17 +501,10 @@ body {
           </ScrollView>
 
         </KeyboardAvoidingView>
-
-        {!isKeyboardVisible && (
+{!isKeyboardVisible && (
   <View style={styles.footerContainer}>
-    <Image
-      source={require('../../assets/images/mantra.jpg')}
-      style={styles.footerImage1}
-    />
-    <Image
-      source={require('../../assets/images/make-in-India-logo.png')}
-      style={styles.footerImage2}
-    />
+    <Image source={mantraImage} style={styles.footerImage1} />
+    <Image source={makeInIndiaLogo} style={styles.footerImage2} />
   </View>
 )}
       </ImageBackground>
