@@ -296,7 +296,7 @@ const SignupScreen = () => {
               By logging in, you agree to our{' '}
               <Text
                 style={styles.linkText}
-                onPress={() => navigation.navigate('Terms')}
+                onPress={() => navigation.navigate('TermsScreen')}
               >
                 Terms & Conditions
               </Text>
@@ -738,7 +738,7 @@ export default SignupScreen;
 //       style={styles.footerImage1}
 //     />
 //     <Image
-//       source={require('../../assets/images/make-in-India-logo.jpg')}
+//       source={require('../../assets/images/makeInIndia.jpg')}
 //       style={styles.footerImage2}
 //     />
 //   </View>

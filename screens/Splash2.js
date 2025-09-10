@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
 //             style={styles.footerImage1}
 //           />
 //           <Image
-//             source={require('../assets/images/make-in-India-logo.jpg')}
+//             source={require('../assets/images/makeInIndia.jpg')}
 //             style={styles.footerImage2}
 //           />
 //         </View>

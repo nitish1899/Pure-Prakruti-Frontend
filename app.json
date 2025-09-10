@@ -11,21 +11,17 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
-      "permissions": [
-        "INTERNET"
-      ],
+      "permissions": ["INTERNET"],
       "adaptiveIcon": {
         "foregroundImage": "./assets/pureprakruti.png",
         "backgroundColor": "#ffffff"
       },
-      "versionCode": 4,
+      "versionCode": 20,             
       "package": "com.tsilteam.pureprakruti"
     },
     "web": {
@@ -41,6 +37,16 @@
       "eas": {
         "projectId": "00123e41-96a8-40d9-930b-3cd15932d59c"
       }
-    }
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "targetSdkVersion": 35    
+          }
+        }
+      ]
+    ]
   }
 }
