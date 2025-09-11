@@ -369,7 +369,7 @@ const App = () => {
        <View>
         <Image
           className=" ml-11"
-          source={require("../../assets/images/make-in-India-logo.jpg")}
+          source={require("../../assets/images/makeInIndia.jpg")}
           style={{ width: 80, height: 48 }}
         />
         </View>
@@ -395,7 +395,7 @@ const App = () => {
        <View>
         <Image
           className=" ml-11"
-          source={require("../../assets/images/make-in-India-logo.jpg")}
+          source={require("../../assets/images/makeInIndia.jpg")}
           style={{ width: 80, height: 48 }}
         />
         </View>

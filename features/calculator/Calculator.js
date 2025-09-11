@@ -384,7 +384,7 @@ const styles = StyleSheet.create({
   headerContainer: {
     width: "100%",
     height: "14%",
-    backgroundColor: "#004d00",
+    backgroundColor: "#006400",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -454,11 +454,21 @@ iconInputWrapper: {
 icon: {
   marginRight: 8,
 },
+  input: {
+    flex: 1,
+    height: 42,
+    fontSize: 14,
+  },
+  inputHalf: {
+    flex: 1,
+    height: 42,
+    fontSize: 14,
+  },
 
 inputField: {
-  flex: 1,
-  fontSize: 16,
-  color: "#333",
+    flex: 1,
+    height: 42,
+    fontSize: 14,
 },
 
   submitButton: {

@@ -7,7 +7,7 @@ const TermsScreen = () => {
     <View style={styles.container}>
       {/* Header */}
       <LinearGradient
-        colors={['#1B5E20', '#1B5E20']}
+        colors={['#006400', '#006400']}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={styles.header}
@@ -56,7 +56,7 @@ const TermsScreen = () => {
         <Text style={styles.sectionTitle}>6. Contact Us</Text>
         <Text style={styles.paragraph}>
           If you have any questions regarding these Terms & Conditions, please reach out to us at:
-          support@pureprakrti.com
+          siddycash@gmail.com
         </Text>
 
         <Text style={styles.footerText}>

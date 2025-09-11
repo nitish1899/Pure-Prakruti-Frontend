@@ -27,18 +27,35 @@ const App = () => {
   const [isChecked, setIsChecked] = useState(false);
   const userInfo = useSelector(selectUserInfo);
   const navigation = useNavigation();
-  const [selectedFuel, setSelectedFuel] = useState("");
+  const [fuelType, setFuelType] = useState("diesel");
+const [co2Saved, setCo2Saved] = useState(0);
+
 
     const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
 
-    const [isFocus, setIsFocus] = useState(false);
+// sample emission factors (kg CO₂ per unit fuel) 
+const emissionFactors = {
+  petrol: 2.68,
+  diesel: 2.23,
+  ethanol: 1.5,
+  electric: 0.0 
+};
 
-  const fuelTypes = [
-    { label: 'Petrol', value: 'petrol' },
-    { label: 'Diesel', value: 'diesel' },
-    { label: 'Ethanol', value: 'ethanol' },
-    { label: 'Electric', value: 'electric' },
-  ];
+useEffect(() => {
+  if (result && result.co2Emission) {
+    // diesel ko base reference fuel maana gaya hai
+    const currentEmission = result.co2Emission;
+
+    // alternative fuel emission nikalna
+    const altEmission =
+      (currentEmission / emissionFactors["diesel"]) *
+      emissionFactors[fuelType];
+
+    // kitna CO₂ bacha uska difference
+    setCo2Saved((currentEmission - altEmission).toFixed(2));
+  }
+}, [fuelType, result]);
+
     useEffect(() => {
       const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
         setIsKeyboardVisible(true);
@@ -52,14 +69,6 @@ const App = () => {
         hideSubscription.remove();
       };
     }, []);
-
-  // CO2 Emission Data (kg)
-  const fuelEmissions = {
-    petrol: 200,
-    diesel: 180,
-    ethanol: 100,
-    electric: 0,
-  };
 
 
   const animationRef = useRef(null);
@@ -105,7 +114,7 @@ const App = () => {
       printerUrl: selectedPrinter?.url, // iOS only
     });
   };
-  const recommendedTrees = result ? Math.ceil(result.co2Emission / 1000) * 12 : 0;
+  const recommendedTrees = result ? Math.ceil(result.co2Emission / 1000) * 12 : 0; 
   const html = `      
 <!DOCTYPE html>
 <html lang="en">
@@ -303,7 +312,7 @@ body {
     </div>
 <!-- Certificate Heading -->
 <div class="certificate-heading">
-  <h1>Certificate of Eco Excellence</h1>
+  <h1>Green Certificate</h1>
   <h2>CO₂ Emission Certification</h2>
 </div>
 
@@ -312,7 +321,7 @@ body {
      with vehicle number <span class="highlight" id="vehicleNumber">${result && result.vehicleNumber}</span>, 
      has emitted <span class="highlight" id="co2Emission">${result && (result.co2Emission / 1000).toFixed(1)}</span> unit CO₂.</p>
 
-       <p>As part of our commitment to sustainability, it is recommended to offset this footprint by planting <span style="color:green; font-weight:bold;">${recommendedTrees}</span> 🌳.</p>
+       <p>As part of our commitment to sustainability, it is recommended to offset this footprint by planting <span style="color:green; font-weight:bold;">${result ? Math.ceil((result.co2Emission / 1000) * 12) : '...'}</span> 🌳.</p>
 </div>
 
 
@@ -425,7 +434,7 @@ body {
     Plant
     <Text style={styles.highlight}>
       {" "}
-      {result && (Math.ceil(result.co2Emission / 1000)) * 12} trees
+      {`${result ? Math.ceil((result.co2Emission / 1000) * 12) : '...'}`} trees
     </Text>{" "}
     🌳 to offset your CO2 Footprint
   </Text>
@@ -442,59 +451,51 @@ body {
 </View>
 
 
-
              </Animated.View>}
             </View>
 
-<View className="m-6 w-[85%] self-center">
 
-  {/* Fuel Type Selection */}
-  <Text className="text-xl font-semibold mt-4 mb-3 text-gray-700">
-    Compare Your CO2 Emissions
+<View className="mt-8 w-72 bg-white rounded-2xl shadow-lg p-4 items-center self-center">
+  <Text className="text-xl font-bold text-gray-800 mb-3 text-center">
+    Saving CO₂ with alternate fuel type
   </Text>
-  <View className="border border-gray-300 rounded-xl bg-white shadow-lg overflow-hidden">
-    <Dropdown
-      style={[
-        styles.dropdown,
-        isFocus && { borderColor: '#1E40AF', borderWidth: 2 }
-      ]}
-      data={fuelTypes}
-      labelField="label"
-      valueField="value"
-      placeholder="Select Fuel Type"
-      value={selectedFuel}
-      onFocus={() => setIsFocus(true)}
-      onBlur={() => setIsFocus(false)}
-      onChange={(item) => setSelectedFuel(item.value)}
-      renderItem={(item, index) => (
-        <View key={index}>
-          <View style={styles.itemContainer}>
-            <Text style={styles.itemText}>{item.label}</Text>
-          </View>
-          {index < fuelTypes.length - 1 && <View style={styles.separator} />}
-        </View>
-      )}
-    />
+  <View className="w-full border border-gray-300 rounded-xl overflow-hidden bg-gray-50">
+    <Picker
+      selectedValue={fuelType}
+      onValueChange={(itemValue) => setFuelType(itemValue)}
+      style={{ height: 50, width: "100%" }}
+    >
+      <Picker.Item label="Petrol" value="petrol" />
+      <Picker.Item label="Diesel" value="diesel" />
+      <Picker.Item label="Ethanol" value="ethanol" />
+      <Picker.Item label="Electric" value="electric" />
+    </Picker>
   </View>
-
-  {/* Conditional CO2 Footprint Result */}
-  {selectedFuel !== "" && (
- <ImageBackground
-          source={require("../../assets/images/forest.jpg")}
-            className="mt-6 p-4 rounded-lg overflow-hidden shadow-md"
-            resizeMode="cover"
-          >
-      <View className=" bg-opacity-40 flex-1 justify-center p-5 rounded-2xl">
-        <Text className="text-white text-sm">Your Current Carbon Footprint: 200kg</Text>
-        <Text className="text-white text-xl font-bold mt-2">
-          Using{" "}
-          {selectedFuel.charAt(0).toUpperCase() + selectedFuel.slice(1)}:{" "}
-          {fuelEmissions[selectedFuel]}kg
-        </Text>
-      </View>
-    </ImageBackground>
-  )}
 </View>
+
+
+<ImageBackground
+  source={require("../../assets/images/forest.jpg")}
+  className="mt-6 p-4 rounded-lg overflow-hidden shadow-md"
+  resizeMode="cover"
+  blurRadius={5} // 👈 blur apply
+>
+  <View className="bg-black bg-opacity-30 flex-1 justify-center p-5 rounded-2xl">
+    {fuelType === "petrol" && co2Saved < 0 ? (
+      <Text className="text-red-200 font-medium text-center">
+        Using petrol may release more CO₂ compared to diesel.  
+        We recommend exploring other eco-friendly fuel options.  
+      </Text>
+    ) : (
+      <Text className="text-white font-semibold text-center">
+        You have saved {co2Saved} kg of CO₂ by using {fuelType}.  
+        Thank you for contributing towards a greener planet! 🌍  
+      </Text>
+    )}
+  </View>
+</ImageBackground>
+
+
 
           </ScrollView>
 
@@ -531,7 +532,7 @@ const styles = StyleSheet.create({
   headerContainer: {
     width: "100%",
     height: "15%",
-    backgroundColor: "#1B5E20",
+    backgroundColor: "#006400",
     justifyContent: "center",
     alignItems: "center",
     borderBottomLeftRadius: 20,
